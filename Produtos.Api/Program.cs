@@ -3,7 +3,19 @@ using Microsoft.EntityFrameworkCore;
 using Produtos.Api.Services;
 using Produtos.Api.Interfaces;
 
-var builder = WebApplication.CreateBuilder(args);
+var builder = WebApplication.CreateBuilder(new WebApplicationOptions
+{
+    Args = args,
+    // Desabilita reloadOnChange para evitar erro de inotify
+    ApplicationName = typeof(Program).Assembly.FullName
+});
+builder.Host.ConfigureAppConfiguration((hostingContext, config) =>
+{
+    config.Sources.Clear();
+    config.AddJsonFile("appsettings.json", optional: false, reloadOnChange: false);
+    config.AddJsonFile($"appsettings.{hostingContext.HostingEnvironment.EnvironmentName}.json", optional: true, reloadOnChange: false);
+    config.AddEnvironmentVariables();
+});
 
 // Configuração do DbContext
 builder.Services.AddDbContext<AppDbContext>(options =>
