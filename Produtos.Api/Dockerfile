@@ -8,8 +8,9 @@ COPY . .
 RUN dotnet restore
 RUN dotnet tool install --global dotnet-ef
 ENV PATH="$PATH:/root/.dotnet/tools"
+RUN dotnet build -c Release
+RUN dotnet ef database update --project Produtos.Api.csproj --configuration Release
 RUN dotnet publish -c Release -o /app/publish
-RUN dotnet ef database update --no-build --project Produtos.Api.csproj
 
 FROM base AS final
 WORKDIR /app
