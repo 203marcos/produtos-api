@@ -7,12 +7,11 @@ WORKDIR /src
 COPY . .
 RUN dotnet restore
 RUN dotnet publish -c Release -o /app/publish
+# Rode as migrations aqui, usando o SDK
+RUN dotnet ef database update --no-build --project Produtos.Api.csproj
 
 FROM base AS final
 WORKDIR /app
 COPY --from=build /app/publish .
-
 ENV ASPNETCORE_ENVIRONMENT=Development
-
-# Roda as migrations antes de iniciar a aplicação
-ENTRYPOINT ["sh", "-c", "dotnet ef database update --no-build && dotnet Produtos.Api.dll"]
+ENTRYPOINT ["dotnet", "Produtos.Api.dll"]
