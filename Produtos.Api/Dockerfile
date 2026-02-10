@@ -6,8 +6,9 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
 COPY . .
 RUN dotnet restore
+RUN dotnet tool install --global dotnet-ef
+ENV PATH="$PATH:/root/.dotnet/tools"
 RUN dotnet publish -c Release -o /app/publish
-# Rode as migrations aqui, usando o SDK
 RUN dotnet ef database update --no-build --project Produtos.Api.csproj
 
 FROM base AS final
