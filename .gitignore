@@ -1,0 +1,43 @@
+# .gitignore para projetos .NET
+
+# Build results
+bin/
+obj/
+
+# User-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Visual Studio Code
+.vscode/
+
+# Database files
+*.db
+*.mdf
+*.ldf
+
+# Logs
+*.log
+
+# Configs sensíveis
+appsettings.Development.json
+appsettings.Local.json
+
+# Pacotes
+*.nupkg
+
+# Arquivos de backup
+*~
+*.tmp
+
+# Outros
+*.DS_Store
+Thumbs.db
+
+# Test results
+TestResults/
+
+# Diretórios de publicação
+publish/
