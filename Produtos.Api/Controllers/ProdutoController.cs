@@ -4,10 +4,12 @@ using Produtos.Api.Interfaces;
 
 namespace Produtos.Api.Controllers;
 
+// Controller responsavel por expor os endpoints da API de produtos
 [ApiController]
 [Route("api/[controller]")]
 public class ProdutoController : ControllerBase
 {
+  // Injecao de dependencia do servico de produtos
   private readonly IProdutoService _service;
 
   public ProdutoController(IProdutoService service)
@@ -36,6 +38,8 @@ public class ProdutoController : ControllerBase
     return Ok(produtos);
   }
 
+  // GET /api/produtos/{id}
+  // Busca um produto pelo id
   [HttpGet("{id}")]
   public async Task<IActionResult> GetById(Guid id)
   {
