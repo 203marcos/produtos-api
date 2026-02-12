@@ -22,9 +22,15 @@ public class ProdutoController : ControllerBase
     int? page = null;
     int? pageSize = null;
     if (Request.Query.ContainsKey("page"))
-      int.TryParse(Request.Query["page"], out var p) ? page = p : page = null;
+    {
+      int p;
+      if (int.TryParse(Request.Query["page"], out p)) page = p;
+    }
     if (Request.Query.ContainsKey("pageSize"))
-      int.TryParse(Request.Query["pageSize"], out var ps) ? pageSize = ps : pageSize = null;
+    {
+      int ps;
+      if (int.TryParse(Request.Query["pageSize"], out ps)) pageSize = ps;
+    }
 
     var produtos = await _service.GetAllAsync(categoria, page, pageSize);
     return Ok(produtos);
