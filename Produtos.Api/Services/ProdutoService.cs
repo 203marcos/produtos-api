@@ -21,6 +21,12 @@ public class ProdutoService : IProdutoService
     if (!string.IsNullOrEmpty(categoria))
       query = query.Where(p => p.Categoria == categoria);
 
+    // Paginação opcional
+    if (page.HasValue && pageSize.HasValue && page > 0 && pageSize > 0)
+    {
+        query = query.Skip((page.Value - 1) * pageSize.Value).Take(pageSize.Value);
+    }
+
     return await query
         .Select(p => new ProdutoDto
         {

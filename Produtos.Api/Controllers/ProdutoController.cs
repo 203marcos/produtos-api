@@ -18,7 +18,15 @@ public class ProdutoController : ControllerBase
   [HttpGet]
   public async Task<IActionResult> GetAll([FromQuery] string? categoria)
   {
-    var produtos = await _service.GetAllAsync(categoria);
+    // Paginação opcional
+    int? page = null;
+    int? pageSize = null;
+    if (Request.Query.ContainsKey("page"))
+      int.TryParse(Request.Query["page"], out var p) ? page = p : page = null;
+    if (Request.Query.ContainsKey("pageSize"))
+      int.TryParse(Request.Query["pageSize"], out var ps) ? pageSize = ps : pageSize = null;
+
+    var produtos = await _service.GetAllAsync(categoria, page, pageSize);
     return Ok(produtos);
   }
 
