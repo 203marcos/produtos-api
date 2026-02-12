@@ -18,9 +18,17 @@ API para gerenciar produtos de uma loja virtual.
    ```
    dotnet ef database update
    ```
+
 4. Inicie a API:
    ```
    dotnet run --project Produtos.Api
+   ```
+
+## Como rodar os testes
+1. Acesse a raiz do projeto
+2. Execute:
+   ```
+   dotnet test Produtos.Api.Tests/Produtos.Api.Tests.csproj
    ```
 
 ## Funcionalidades implementadas
