@@ -2,6 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Produtos.Api.Models;
 
+// Entidade que representa o produto no banco de dados
 public class Produto
 {
   public Guid Id { get; set; }

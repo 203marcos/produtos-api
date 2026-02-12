@@ -4,10 +4,12 @@ using Produtos.Api.Interfaces;
 
 namespace Produtos.Api.Controllers;
 
+// Controller responsavel por expor os endpoints da API de produtos
 [ApiController]
 [Route("api/[controller]")]
 public class ProdutoController : ControllerBase
 {
+  // Injecao de dependencia do servico de produtos
   private readonly IProdutoService _service;
 
   public ProdutoController(IProdutoService service)
@@ -22,14 +24,22 @@ public class ProdutoController : ControllerBase
     int? page = null;
     int? pageSize = null;
     if (Request.Query.ContainsKey("page"))
-      int.TryParse(Request.Query["page"], out var p) ? page = p : page = null;
+    {
+      int p;
+      if (int.TryParse(Request.Query["page"], out p)) page = p;
+    }
     if (Request.Query.ContainsKey("pageSize"))
-      int.TryParse(Request.Query["pageSize"], out var ps) ? pageSize = ps : pageSize = null;
+    {
+      int ps;
+      if (int.TryParse(Request.Query["pageSize"], out ps)) pageSize = ps;
+    }
 
     var produtos = await _service.GetAllAsync(categoria, page, pageSize);
     return Ok(produtos);
   }
 
+  // GET /api/produtos/{id}
+  // Busca um produto pelo id
   [HttpGet("{id}")]
   public async Task<IActionResult> GetById(Guid id)
   {

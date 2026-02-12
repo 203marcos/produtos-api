@@ -1,5 +1,6 @@
 namespace Produtos.Api.DTOs;
 
+// DTO para transferir dados do produto entre backend e frontend
 public class ProdutoDto
 {
   public Guid Id { get; set; }

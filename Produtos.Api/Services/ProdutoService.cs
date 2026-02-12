@@ -6,8 +6,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Produtos.Api.Services;
 
+// Service responsavel pela logica de negocio dos produtos
 public class ProdutoService : IProdutoService
 {
+  // Contexto do banco de dados
   private readonly AppDbContext _context;
 
   public ProdutoService(AppDbContext context)
@@ -15,16 +17,16 @@ public class ProdutoService : IProdutoService
     _context = context;
   }
 
-  public async Task<IEnumerable<ProdutoDto>> GetAllAsync(string? categoria = null)
+  // Retorna lista de produtos, com filtro e paginacao opcionais
+  public async Task<IEnumerable<ProdutoDto>> GetAllAsync(string? categoria = null, int? page = null, int? pageSize = null)
   {
     var query = _context.Produtos.AsQueryable();
     if (!string.IsNullOrEmpty(categoria))
       query = query.Where(p => p.Categoria == categoria);
 
-    // Paginação opcional
     if (page.HasValue && pageSize.HasValue && page > 0 && pageSize > 0)
     {
-        query = query.Skip((page.Value - 1) * pageSize.Value).Take(pageSize.Value);
+      query = query.Skip((page.Value - 1) * pageSize.Value).Take(pageSize.Value);
     }
 
     return await query
